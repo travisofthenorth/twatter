@@ -37,11 +37,11 @@ class TwatStreamListener(tweepy.StreamListener):
             if img_url is not None:
                 image_list.append(img_url)
 
-        if len(image_list) > 0:
-            self.push_image_list(list(set(image_list)))
+        self.push_image_list(list(set(image_list)))
 
     def push_image_list(self, urls):
-        self.twat_redis.lpush('twats', *urls)
+        if urls is list and len(urls) > 0:
+            self.twat_redis.lpush('twats', *urls)
 
 
 auth = tweepy.OAuthHandler(os.environ['TWITTER_CONSUMER_KEY'], os.environ['TWITTER_CONSUMER_SECRET'])
