@@ -14,3 +14,9 @@ Set up database (assuming postgres is installed)
 createdb twatter
 psql twatter < schema.sql
 ```
+
+Usage
+
+```bash
+python twatter.py 'donald trump' 'kanye west' 'chicken nuggets'
+```

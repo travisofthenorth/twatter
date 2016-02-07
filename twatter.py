@@ -1,4 +1,5 @@
 import os
+import sys
 import tweepy
 from stream import TwatStreamListener
 from multiprocessing import Process
@@ -12,6 +13,6 @@ def stream_twats(search):
     twat_stream.filter(track=[search])
 
 if __name__ == '__main__':
-    for search in ('cat', 'dog'):
+    for search in sys.argv[1:]:
         p = Process(target=stream_twats, args=(search,))
         p.start()
