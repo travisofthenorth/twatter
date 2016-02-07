@@ -4,7 +4,7 @@
 
 -- Dumped from database version 9.4.3
 -- Dumped by pg_dump version 9.4.3
--- Started on 2016-02-06 19:27:27 EST
+-- Started on 2016-02-06 19:42:48 EST
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -22,7 +22,7 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 
 
 --
--- TOC entry 2267 (class 0 OID 0)
+-- TOC entry 2268 (class 0 OID 0)
 -- Dependencies: 174
 -- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: -
 --
@@ -64,7 +64,7 @@ CREATE SEQUENCE twats_id_seq
 
 
 --
--- TOC entry 2268 (class 0 OID 0)
+-- TOC entry 2269 (class 0 OID 0)
 -- Dependencies: 172
 -- Name: twats_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
@@ -73,7 +73,7 @@ ALTER SEQUENCE twats_id_seq OWNED BY twats.id;
 
 
 --
--- TOC entry 2148 (class 2604 OID 491306)
+-- TOC entry 2148 (class 2604 OID 491312)
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -81,7 +81,7 @@ ALTER TABLE ONLY twats ALTER COLUMN id SET DEFAULT nextval('twats_id_seq'::regcl
 
 
 --
--- TOC entry 2150 (class 2606 OID 491311)
+-- TOC entry 2151 (class 2606 OID 491311)
 -- Name: twats_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -90,8 +90,16 @@ ALTER TABLE ONLY twats
 
 
 --
--- TOC entry 2266 (class 0 OID 0)
--- Dependencies: 5
+-- TOC entry 2149 (class 1259 OID 491313)
+-- Name: index_twats_on_tweeted_at_and_search; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_twats_on_tweeted_at_and_search ON twats USING btree (tweeted_at, search);
+
+
+--
+-- TOC entry 2267 (class 0 OID 0)
+-- Dependencies: 6
 -- Name: public; Type: ACL; Schema: -; Owner: -
 --
 
@@ -101,7 +109,7 @@ GRANT ALL ON SCHEMA public TO travis;
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
--- Completed on 2016-02-06 19:27:27 EST
+-- Completed on 2016-02-06 19:42:48 EST
 
 --
 -- PostgreSQL database dump complete
