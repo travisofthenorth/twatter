@@ -1,4 +1,5 @@
 import redis
+import time
 import datetime
 import tweepy
 from tweepy.utils import import_simplejson
@@ -9,9 +10,9 @@ class TwatStreamListener(tweepy.StreamListener):
     json_parser = import_simplejson()
     twat_redis = redis.StrictRedis(host='localhost', port=6379, db=0)
 
-    def __init__(self, search):
+    def __init__(self, search_terms):
         super(TwatStreamListener, self).__init__()
-        self.search = search
+        self.search_terms = search_terms
 
     def on_connect(self):
         print('connected!')
@@ -24,12 +25,27 @@ class TwatStreamListener(tweepy.StreamListener):
 
     def on_data(self, raw_data):
         data = self.json_parser.loads(raw_data)
-        time = self.to_datetime(data['timestamp_ms'])
-        Postgres().insert_twat(search = self.search, text = data['text'],
-            location = data['user']['location'], tweeted_at = time)
+        for phrase in self.search_terms:
+            if self.match(data.get('text', '').lower(), phrase):
+                self.record(data, phrase)
+                return
+        print 'Did not find a match for %s' % data['text']
         # self.traverse(data)
 
+    def match(self, twat, phrase):
+        for word in phrase.split(' '):
+            if word in twat:
+                return True
+        return False
+
+    def record(self, twat, phrase):
+        time = self.to_datetime(twat.get('timestamp_ms', None))
+        Postgres().insert_twat(search = phrase, text = twat['text'],
+            location = twat['user']['location'], tweeted_at = time)
+
     def to_datetime(self, timestamp):
+        if timestamp is None:
+            timestamp = time.time() * 1000
         time = int(timestamp) / 1000
         return datetime.datetime.fromtimestamp(time)
 
