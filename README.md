@@ -3,9 +3,7 @@
 Install dependencies
 
 ```bash
-pip install tweepy
-pip install redis
-pip install psycopg2
+pip install -r requirements.txt
 ```
 
 Set up database (assuming postgres is installed)
