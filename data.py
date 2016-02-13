@@ -1,8 +1,12 @@
+import os
 import psycopg2
 
 class Postgres:
     class __Postgres:
-        connection = psycopg2.connect("dbname=twatter user=travis")
+        connection = psycopg2.connect(host=os.environ.get('PG_HOST', 'localhost'),
+          user=os.environ['PG_USER'], password=os.environ.get('PG_PASSWORD', None),
+          dbname=os.environ.get('PG_DBNAME', 'twatter'), port=os.environ.get('PG_PORT', 5432),
+        )
 
         def insert_twat(self, text, location, search, tweeted_at):
           cursor = self.connection.cursor()
