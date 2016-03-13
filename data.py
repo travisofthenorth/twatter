@@ -16,6 +16,11 @@ class Postgres:
           )
           self.connection.commit()
 
+        def count_twats(self):
+          cursor = self.connection.cursor()
+          cursor.execute("select count(*), search from twats group by search;")
+          return cursor.fetchall()
+
     instance = None
 
     def __init__(self):

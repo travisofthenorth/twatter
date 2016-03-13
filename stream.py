@@ -64,9 +64,8 @@ class TwatStreamListener(tweepy.StreamListener):
             img_url = obj.get('media_url_https', None)
             if img_url is not None:
                 image_list.append(img_url)
-
         self.push_image_list(list(set(image_list)))
 
     def push_image_list(self, urls):
-        if urls is list and len(urls) > 0:
+        if type(urls) == list and len(urls) > 0:
             self.twat_redis.lpush('twats', *urls)
