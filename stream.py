@@ -25,11 +25,13 @@ class TwatStreamListener(tweepy.StreamListener):
 
     def on_data(self, raw_data):
         data = self.json_parser.loads(raw_data)
-        for phrase in self.search_terms:
-            if self.match(data.get('text', '').lower(), phrase):
-                self.record(data, phrase)
-                return
-        print 'Did not find a match for %s' % data['text']
+        if data.has_key('text'):
+            for phrase in self.search_terms:
+                if self.match(data.get('text', '').lower(), phrase):
+                    self.record(data, phrase)
+                    print data['text']
+                    return
+            print 'Did not find a match for %s' % data['text']
         # self.traverse(data)
 
     def match(self, twat, phrase):
