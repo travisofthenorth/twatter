@@ -1,4 +1,14 @@
-<!doctype html>
-{% if img %}
-  <img src="{{ img }}"/>
-{% endif %}
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+</head>
+<body>
+  <img id="trump" src="{{ image }}"/>
+
+  <script type="text/javascript">
+    window.setInterval(function(){
+      $.get('/latest_trump', function(data) {
+        $('#trump').attr('src', data['image']);
+      })
+    }, 5000);
+  </script>
+</body>

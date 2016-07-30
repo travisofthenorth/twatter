@@ -1,10 +1,20 @@
 import random
-from data import Postgres
+import redis
+# from data import Postgres
 
-from flask import Flask, render_template
+from flask import Flask, render_template, jsonify
 app = Flask(__name__)
+twat_redis = redis.StrictRedis(host='localhost', port=6379, db=0)
 
 @app.route("/")
+def home():
+    return render_template('twatimg.html', image=twat_redis.get('twatter_image'))
+
+@app.route("/latest_trump")
+def latest_trump():
+  return jsonify({'image': twat_redis.get('twatter_image')})
+
+@app.route("/counts")
 def counts():
     results = Postgres().count_twats()
     results = sorted(results, key=lambda result: result[1])

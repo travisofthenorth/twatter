@@ -3,7 +3,7 @@ import time
 import datetime
 import tweepy
 from tweepy.utils import import_simplejson
-from data import Postgres
+# from data import Postgres
 
 class TwatStreamListener(tweepy.StreamListener):
 
@@ -25,14 +25,14 @@ class TwatStreamListener(tweepy.StreamListener):
 
     def on_data(self, raw_data):
         data = self.json_parser.loads(raw_data)
-        if data.has_key('text'):
-            for phrase in self.search_terms:
-                if self.match(data.get('text', '').lower(), phrase):
-                    self.record(data, phrase)
-                    print data['text']
-                    return
-            print 'Did not find a match for %s' % data['text']
-        # self.traverse(data)
+        # if data.has_key('text'):
+        #     for phrase in self.search_terms:
+        #         if self.match(data.get('text', '').lower(), phrase):
+        #             self.record(data, phrase)
+        #             print data['text']
+        #             return
+        #     print 'Did not find a match for %s' % data['text']
+        self.traverse(data)
 
     def match(self, twat, phrase):
         for word in phrase.split(' '):
@@ -65,8 +65,12 @@ class TwatStreamListener(tweepy.StreamListener):
                 continue
             img_url = obj.get('media_url_https', None)
             if img_url is not None:
-                image_list.append(img_url)
-        self.push_image_list(list(set(image_list)))
+                self.push_image(img_url)
+                # image_list.append(img_url)
+        # self.push_image_list(list(set(image_list)))
+
+    def push_image(self, url):
+        self.twat_redis.set('twatter_image', url)
 
     def push_image_list(self, urls):
         if type(urls) == list and len(urls) > 0:
