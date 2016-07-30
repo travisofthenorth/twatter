@@ -2,13 +2,22 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 </head>
 <body>
-  <img id="trump" src="{{ image }}"/>
+  <div id="images" style="width: 400px; margin: 0 auto;">
+    <a href="{{ data['status'] }}"><img class="twat" src="{{ data['image'] }}"/>
+  </div>
+
+  <style>
+    .twat {
+      width: 400px;
+    }
+  </style>
 
   <script type="text/javascript">
     window.setInterval(function(){
       $.get('/latest_trump', function(data) {
-        $('#trump').attr('src', data['image']);
+        let img = `<img class="twat" src="${data['image']}" />`
+        $('#images').prepend(`<a href="${data['status']}">${img}</a>`);
       })
-    }, 5000);
+    }, 1000);
   </script>
 </body>

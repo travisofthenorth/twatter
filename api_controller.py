@@ -8,11 +8,11 @@ twat_redis = redis.StrictRedis(host='localhost', port=6379, db=0)
 
 @app.route("/")
 def home():
-    return render_template('twatimg.html', image=twat_redis.get('twatter_image'))
+    return render_template('twatimg.html', data=twat_redis.hgetall('twatter_image'))
 
 @app.route("/latest_trump")
 def latest_trump():
-  return jsonify({'image': twat_redis.get('twatter_image')})
+  return jsonify(twat_redis.hgetall('twatter_image'))
 
 @app.route("/counts")
 def counts():

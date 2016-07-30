@@ -25,14 +25,8 @@ class TwatStreamListener(tweepy.StreamListener):
 
     def on_data(self, raw_data):
         data = self.json_parser.loads(raw_data)
-        # if data.has_key('text'):
-        #     for phrase in self.search_terms:
-        #         if self.match(data.get('text', '').lower(), phrase):
-        #             self.record(data, phrase)
-        #             print data['text']
-        #             return
-        #     print 'Did not find a match for %s' % data['text']
-        self.traverse(data)
+        if data.has_key('id'):
+            self.traverse(data['id'], data)
 
     def match(self, twat, phrase):
         for word in phrase.split(' '):
@@ -51,26 +45,26 @@ class TwatStreamListener(tweepy.StreamListener):
         time = int(timestamp) / 1000
         return datetime.datetime.fromtimestamp(time)
 
-    def traverse(self, twat):
+    def traverse(self, id, twat):
         for attribute, value in twat.iteritems():
             if isinstance(value, dict):
-                self.traverse(value)
+                self.traverse(id, value)
             if isinstance(value, list):
-                self.collect_images(value)
+                self.collect_images(id, value)
 
-    def collect_images(self, l):
-        image_list = []
+    def collect_images(self, id, l):
         for obj in l:
             if type(obj) is not dict:
                 continue
             img_url = obj.get('media_url_https', None)
             if img_url is not None:
-                self.push_image(img_url)
-                # image_list.append(img_url)
-        # self.push_image_list(list(set(image_list)))
+                self.push_image(id, img_url)
 
-    def push_image(self, url):
-        self.twat_redis.set('twatter_image', url)
+
+    def push_image(self, id, url):
+        twat_link = 'https://twitter.com/statuses/%s' % id
+        data = { 'image': url, 'status': twat_link}
+        self.twat_redis.hmset('twatter_image', data)
 
     def push_image_list(self, urls):
         if type(urls) == list and len(urls) > 0:
