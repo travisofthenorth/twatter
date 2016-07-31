@@ -9,31 +9,30 @@
   </div>
 
   <style>
+    body { margin: 0 }
     a {
       position: absolute;
+      border: solid medium black;
     }
-    .hidden {
-      top: -1000px;
-    }
-    .twat {
-      width: 400px;
-    }
+    .hidden { visibility: hidden; }
+    .twat { width: 400px; }
   </style>
 
   <script type="text/javascript">
     window.setInterval(function(){
       $.get('/latest_trump', function(data) {
         let img = `<img class="twat latest" src="${data['image']}" />`;
-        let twat = $('#images').prepend(`<a class="hidden" href="${data['status']}">${img}</a>`);
+        $('#images').prepend(`<a class="hidden" href="${data['status']}">${img}</a>`);
 
         $('.latest').load(function() {
           let height = $(this).css('height');
+
+          $(this).parent().removeClass('hidden');
           $(this).parent().css('top', `-${height}`);
 
           $('a').animate({
             top: `+=${height}`
           }, 1000, 'linear', function() {
-            $('.hidden').removeClass('hidden');
             $('.latest').removeClass('latest');
           });
         });
