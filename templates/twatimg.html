@@ -1,12 +1,20 @@
+<html>
 <head>
+  <title></title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 </head>
 <body>
   <div id="images" style="width: 400px; margin: 0 auto;">
-    <a href="{{ data['status'] }}"><img class="twat" src="{{ data['image'] }}"/>
+    <a href="{{ data['status'] }}"><img class="twat" src="{{ data['image'] }}"/></a>
   </div>
 
   <style>
+    a {
+      position: absolute;
+    }
+    .hidden {
+      top: -1000px;
+    }
     .twat {
       width: 400px;
     }
@@ -15,9 +23,22 @@
   <script type="text/javascript">
     window.setInterval(function(){
       $.get('/latest_trump', function(data) {
-        let img = `<img class="twat" src="${data['image']}" />`
-        $('#images').prepend(`<a href="${data['status']}">${img}</a>`);
+        let img = `<img class="twat latest" src="${data['image']}" />`;
+        let twat = $('#images').prepend(`<a class="hidden" href="${data['status']}">${img}</a>`);
+
+        $('.latest').load(function() {
+          let height = $(this).css('height');
+          $(this).parent().css('top', `-${height}`);
+
+          $('a').animate({
+            top: `+=${height}`
+          }, 1000, 'linear', function() {
+            $('.hidden').removeClass('hidden');
+            $('.latest').removeClass('latest');
+          });
+        });
       })
-    }, 1000);
+    }, 2000);
   </script>
 </body>
+</html>
