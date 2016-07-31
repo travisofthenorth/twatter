@@ -1,43 +1,65 @@
 <html>
 <head>
   <title></title>
+  <link rel="stylesheet" type="text/css" href="css/style.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 </head>
 <body>
-  <div id="images" style="width: 400px; margin: 0 auto;">
-    <a href="{{ data['status'] }}"><img class="twat" src="{{ data['image'] }}"/></a>
-  </div>
-
-  <style>
-    body { margin: 0 }
-    a {
-      position: absolute;
-      border: solid medium black;
-    }
-    .hidden { visibility: hidden; }
-    .twat { width: 400px; }
-  </style>
+  <section>
+    <div id="twat0"><a href=""></a></div>
+    <div id="twat1"><a href=""></a></div>
+    <div id="twat2"><a href=""></a></div>
+    <div id="twat3"><a href=""></a></div>
+    <div id="twat4"><a href=""></a></div>
+    <div id="twat5"><a href=""></a></div>
+    <div id="twat6"><a href=""></a></div>
+    <div id="twat7"><a href=""></a></div>
+    <div id="twat8"><a href=""></a></div>
+    <div id="twat9"><a href=""></a></div>
+    <div id="twat10"><a href=""></a></div>
+    <div id="twat11"><a href=""></a></div>
+  </section>
 
   <script type="text/javascript">
-    window.setInterval(function(){
+    function randomInt(min, max) {
+      return Math.floor(Math.random() * (max - min)) + min;
+    }
+
+    function update(id) {
       $.get('/latest_trump', function(data) {
-        let img = `<img class="twat latest" src="${data['image']}" />`;
-        $('#images').prepend(`<a class="hidden" href="${data['status']}">${img}</a>`);
+        $(`${id} a`).fadeOut(500, function() {
+          $(this).remove();
 
-        $('.latest').load(function() {
-          let height = $(this).css('height');
+          let img = `<img src="${data['image']}" />`;
+          $(id).prepend(`<a class="hidden" href="${data['status']}">${img}</a>`);
 
-          $(this).parent().removeClass('hidden');
-          $(this).parent().css('top', `-${height}`);
+          $(`${id} img`).load(function() {
+            let width = $(this).width();
+            let height = $(this).height();
 
-          $('a').animate({
-            top: `+=${height}`
-          }, 1000, 'linear', function() {
-            $('.latest').removeClass('latest');
+            let paddingLeft = ($(id).width() - width) / 2;
+            $(this).css('padding-left', paddingLeft + 'px');
+            let paddingRight = ($(id).height() - height) / 2;
+            $(this).css('padding-top', paddingRight + 'px');
+
+            $(`${id} a`).css('visibility', 'visible').hide().fadeIn(500, function() {
+              setTimeout(update, randomInt(4000, 8000), id);
+            });
           });
         });
-      })
-    }, 2000);
+      });
+    }
+
+    let ids = [0,1,2,3,4,5,6,7,8,9,10,11].sort(function() {
+      return .5 - Math.random();
+    });
+
+    let delay = 200;
+
+    for (var i = 0; i < 12; i++) {
+      delay += 200;
+      setTimeout(update, delay, `#twat${ids[i]}`);
+    }
   </script>
 </body>
 </html>

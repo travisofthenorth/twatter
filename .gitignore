@@ -1,2 +1,4 @@
 *.pyc
 .envrc
+node_modules/
+assets/dist
