@@ -1,3 +1,4 @@
+import os
 import redis
 import time
 import datetime
@@ -8,7 +9,11 @@ from tweepy.utils import import_simplejson
 class TwatStreamListener(tweepy.StreamListener):
 
     json_parser = import_simplejson()
-    twat_redis = redis.StrictRedis(host='localhost', port=6379, db=0)
+    twat_redis = redis.StrictRedis(
+        host=os.environ['REDIS_HOST'],
+        port=os.environ['REDIS_PORT'],
+        password=os.environ['REDIS_PASSWORD']
+    )
 
     def __init__(self, search_terms):
         super(TwatStreamListener, self).__init__()

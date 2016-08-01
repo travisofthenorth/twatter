@@ -19,6 +19,15 @@ Install Redis on your Mac, since you're using a Mac after all
 
 ```bash
 brew install redis
+redis-server
+```
+
+Set up ENV vars to connect to Redis
+
+```bash
+export REDIS_HOST=localhost
+export REDIS_PORT=6379
+export REDIS_PASSWORD=blah
 ```
 
 Optional: Set up database (assuming postgres is installed). You should checkout the tag `text`, which actually dumps some data into Postgres.
