@@ -21,7 +21,7 @@
   </section>
 
   <script type="text/javascript">
-    let requesting = false;
+    var requesting = false;
 
     function randomInt(min, max) {
       return Math.floor(Math.random() * (max - min)) + min;
@@ -29,6 +29,17 @@
 
     function clearRequesting() {
       requesting = false;
+    }
+
+    function resizeTwat(id) {
+      var $image = $(id + ' img');
+      var width = $image.width();
+      var height = $image.height();
+
+      var paddingLeft = ($(id).width() - width) / 2;
+      $image.css('padding-left', paddingLeft + 'px');
+      var paddingRight = ($(id).height() - height) / 2;
+      $image.css('padding-top', paddingRight + 'px');
     }
 
     function update(id) {
@@ -40,22 +51,16 @@
       $.get('/latest_trump', function(data) {
         setTimeout(clearRequesting, 800);
 
-        $(`${id} a`).fadeOut(500, function() {
+        $(id + ' a').fadeOut(500, function() {
           $(this).remove();
 
-          let img = `<img src="${data['image']}" />`;
-          $(id).prepend(`<a class="hidden" href="${data['status']}">${img}</a>`);
+          var img = '<img src="' + data['image'] + '" />';
+          $(id).prepend('<a class="hidden" href="' + data['status'] + '">' + img + '</a>');
 
-          $(`${id} img`).load(function() {
-            let width = $(this).width();
-            let height = $(this).height();
+          $(id + ' img').load(function() {
+            resizeTwat(id);
 
-            let paddingLeft = ($(id).width() - width) / 2;
-            $(this).css('padding-left', paddingLeft + 'px');
-            let paddingRight = ($(id).height() - height) / 2;
-            $(this).css('padding-top', paddingRight + 'px');
-
-            $(`${id} a`).css('visibility', 'visible').hide().fadeIn(500, function() {
+            $(this).parent().css('visibility', 'visible').hide().fadeIn(500, function() {
               setTimeout(update, randomInt(7000, 13000), id);
             });
           });
@@ -63,16 +68,22 @@
       });
     }
 
-    let ids = [0,1,2,3,4,5,6,7,8,9,10,11].sort(function() {
+    var ids = [0,1,2,3,4,5,6,7,8,9,10,11].sort(function() {
       return .5 - Math.random();
     });
 
-    let delay = 200;
+    var delay = 200;
 
     for (var i = 0; i < 12; i++) {
       delay += 200;
-      setTimeout(update, delay, `#twat${ids[i]}`);
+      setTimeout(update, delay, '#twat' + ids[i]);
     }
+
+    $(window).resize(function() {
+      for (var i = 0; i < 12; i++) {
+        resizeTwat('#twat' + ids[i]);
+      }
+    });
   </script>
 </body>
 </html>
