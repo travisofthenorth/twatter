@@ -24,9 +24,9 @@ def counts():
     results = sorted(results, key=lambda result: result[1])
     return render_template('counts.html', results=results)
 
-@application.route("/css/<path:path>")
+@application.route("/static/<path:path>")
 def send_css(path):
-    return send_from_directory('assets/dist/css', path)
+    return send_from_directory('static', path)
 
 if __name__ == "__main__":
     application.run()

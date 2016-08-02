@@ -1,5 +1,5 @@
 *.pyc
 .envrc
 node_modules/
-assets/dist
+static/
 twatter.zip

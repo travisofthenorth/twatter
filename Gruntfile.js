@@ -11,14 +11,14 @@ module.exports = function(grunt) {
       },
       dist: {
         src: 'assets/src/css/style.css',
-        dest: 'assets/dist/css/style.css'
+        dest: 'static/style.css'
       }
     },
 
     autoprefixer: {
       single_file: {
-        src: 'assets/dist/css/style.css',
-        dest: 'assets/dist/css/style.css'
+        src: 'static/style.css',
+        dest: 'static/style.css'
       }
     },
 
