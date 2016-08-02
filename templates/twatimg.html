@@ -55,7 +55,7 @@
           $(this).remove();
 
           var img = '<img src="' + data['image'] + '" />';
-          $(id).prepend('<a class="hidden" href="' + data['status'] + '">' + img + '</a>');
+          $(id).prepend('<a target="_blank" class="hidden" href="' + data['status'] + '">' + img + '</a>');
 
           $(id + ' img').load(function() {
             resizeTwat(id);
