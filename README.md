@@ -1,3 +1,9 @@
+## Purpose
+
+**twat** - a foolish or despicable person
+
+This code uses the Twitter API to gather image URLs from returned tweets into Redis. The [trump tracker](http://trumptracker.travisofthenorth.com/) is an example of its usage.
+
 ## Setting up twitter streaming
 
 Install dependencies
@@ -30,7 +36,7 @@ export REDIS_PORT=6379
 export REDIS_PASSWORD=blah
 ```
 
-Optional: Set up database (assuming postgres is installed). You should checkout the tag `text`, which actually dumps some data into Postgres.
+Optional: You can use the `data` module to dump some data into Postgres. (**The python postgres module is NOT in requirements.txt**)
 
 ```bash
 createdb twatter
@@ -53,5 +59,5 @@ Install Grunt, Node, etc.
 Run Flask
 
 ```bash
-python api_controller.py
+python application.py
 ```
