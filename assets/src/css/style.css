@@ -11,6 +11,11 @@ div {
   height: 33.3vh;
 }
 
+div.mobile {
+  lost-column: 1/2 2 0;
+  height: 33.3vh;
+}
+
 a img {
   max-width: 100%;
   max-height: 100%;

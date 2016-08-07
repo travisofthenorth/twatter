@@ -5,22 +5,11 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 </head>
 <body>
-  <section>
-    <div id="twat0"><a href=""></a></div>
-    <div id="twat1"><a href=""></a></div>
-    <div id="twat2"><a href=""></a></div>
-    <div id="twat3"><a href=""></a></div>
-    <div id="twat4"><a href=""></a></div>
-    <div id="twat5"><a href=""></a></div>
-    <div id="twat6"><a href=""></a></div>
-    <div id="twat7"><a href=""></a></div>
-    <div id="twat8"><a href=""></a></div>
-    <div id="twat9"><a href=""></a></div>
-    <div id="twat10"><a href=""></a></div>
-    <div id="twat11"><a href=""></a></div>
+  <section id="twat-container">
   </section>
 
   <script type="text/javascript">
+    var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     var requesting = false;
 
     function randomInt(min, max) {
@@ -68,20 +57,29 @@
       });
     }
 
-    var ids = [0,1,2,3,4,5,6,7,8,9,10,11].sort(function() {
-      return .5 - Math.random();
+    $(window).ready(function() {
+      var ids = isMobile ? [0,1,2,3,4,5] : [0,1,2,3,4,5,6,7,8,9,10,11];
+      var twatClass = isMobile ? 'mobile' : '';
+      for (var i = ids.length - 1; i >= 0; i--) {
+        var twat = '<div id="twat' + ids[i] + '" class="' + twatClass + '"><a></a></div>';
+        $('#twat-container').prepend(twat);
+      }
+
+      var ids = ids.sort(function() {
+        return .5 - Math.random();
+      });
+
+      var delay = 200;
+
+      for (var i = 0; i < 12; i++) {
+        delay += 200;
+        setTimeout(update, delay, '#twat' + ids[i]);
+      }
     });
-
-    var delay = 200;
-
-    for (var i = 0; i < 12; i++) {
-      delay += 200;
-      setTimeout(update, delay, '#twat' + ids[i]);
-    }
 
     $(window).resize(function() {
       for (var i = 0; i < 12; i++) {
-        resizeTwat('#twat' + ids[i]);
+        resizeTwat('#twat' + i);
       }
     });
   </script>
