@@ -2,7 +2,7 @@
 
 **twat** - a foolish or despicable person
 
-This code uses the Twitter API to gather image URLs from returned tweets into Redis. The [trump tracker](http://trumptracker.travisofthenorth.com/) is an example of its usage.
+This code uses the Twitter API to gather image URLs from returned tweets into Redis. The images are really the fun part, after all. The [trump tracker](http://trumptracker.travisofthenorth.com/) is an example of its usage.
 
 ## Setting up twitter streaming
 
