@@ -1,7 +1,5 @@
 ## Purpose
 
-**twat** - a foolish or despicable person
-
 This code uses the Twitter API to gather image URLs from returned tweets into Redis. The images are really the fun part, after all. The [trump tracker](http://trumptracker.travisofthenorth.com/) is an example of its usage.
 
 ## Setting up twitter streaming
@@ -39,14 +37,14 @@ export REDIS_PASSWORD=blah
 Optional: You can use the `data` module to dump some data into Postgres. (**The python postgres module is NOT in requirements.txt**)
 
 ```bash
-createdb twatter
-psql twatter < schema.sql
+createdb twedis
+psql twedis < schema.sql
 ```
 
 Usage
 
 ```bash
-python twatter.py 'donald trump' 'kanye west' 'chicken nuggets'
+python twedis.py 'donald trump' 'kanye west' 'chicken nuggets'
 ```
 
 ## Setting up web server

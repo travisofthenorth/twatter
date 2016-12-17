@@ -5,7 +5,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 </head>
 <body>
-  <section id="twat-container">
+  <section id="twit-container">
   </section>
 
   <script type="text/javascript">
@@ -20,7 +20,7 @@
       requesting = false;
     }
 
-    function resizeTwat(id) {
+    function resizeTwit(id) {
       var $image = $(id + ' img');
       var width = $image.width();
       var height = $image.height();
@@ -47,7 +47,7 @@
           $(id).prepend('<a target="_blank" class="hidden" href="' + data['status'] + '">' + img + '</a>');
 
           $(id + ' img').load(function() {
-            resizeTwat(id);
+            resizeTwit(id);
 
             $(this).parent().css('visibility', 'visible').hide().fadeIn(500, function() {
               setTimeout(update, randomInt(7000, 13000), id);
@@ -58,12 +58,12 @@
     }
 
     $(window).ready(function() {
-      var twatClass = isMobile ? 'mobile' : '';
+      var twitClass = isMobile ? 'mobile' : '';
       var ids = isMobile ? [0,1,2,3,4,5] : [0,1,2,3,4,5,6,7,8,9,10,11];
 
       for (var i = ids.length - 1; i >= 0; i--) {
-        var twat = '<div id="twat' + ids[i] + '" class="' + twatClass + '"><a></a></div>';
-        $('#twat-container').prepend(twat);
+        var twit = '<div id="twit' + ids[i] + '" class="' + twitClass + '"><a></a></div>';
+        $('#twit-container').prepend(twit);
       }
 
       var ids = ids.sort(function() {
@@ -74,14 +74,14 @@
 
       for (var i = 0; i < ids.length; i++) {
         delay += 200;
-        setTimeout(update, delay, '#twat' + ids[i]);
+        setTimeout(update, delay, '#twit' + ids[i]);
       }
     });
 
     $(window).resize(function() {
-      var numTwats = isMobile ? 6 : 12;
-      for (var i = 0; i < numTwats; i++) {
-        resizeTwat('#twat' + i);
+      var numTwits = isMobile ? 6 : 12;
+      for (var i = 0; i < numTwits; i++) {
+        resizeTwit('#twit' + i);
       }
     });
   </script>

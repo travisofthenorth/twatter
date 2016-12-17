@@ -38,10 +38,10 @@ SET default_with_oids = false;
 
 --
 -- TOC entry 173 (class 1259 OID 491303)
--- Name: twats; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: twits; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
-CREATE TABLE twats (
+CREATE TABLE twits (
     id integer NOT NULL,
     text text,
     location character varying(255),
@@ -52,10 +52,10 @@ CREATE TABLE twats (
 
 --
 -- TOC entry 172 (class 1259 OID 491301)
--- Name: twats_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: twits_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE twats_id_seq
+CREATE SEQUENCE twits_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -66,10 +66,10 @@ CREATE SEQUENCE twats_id_seq
 --
 -- TOC entry 2269 (class 0 OID 0)
 -- Dependencies: 172
--- Name: twats_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+-- Name: twits_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE twats_id_seq OWNED BY twats.id;
+ALTER SEQUENCE twits_id_seq OWNED BY twits.id;
 
 
 --
@@ -77,24 +77,24 @@ ALTER SEQUENCE twats_id_seq OWNED BY twats.id;
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY twats ALTER COLUMN id SET DEFAULT nextval('twats_id_seq'::regclass);
+ALTER TABLE ONLY twits ALTER COLUMN id SET DEFAULT nextval('twits_id_seq'::regclass);
 
 
 --
 -- TOC entry 2151 (class 2606 OID 491311)
--- Name: twats_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: twits_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
-ALTER TABLE ONLY twats
-    ADD CONSTRAINT twats_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY twits
+    ADD CONSTRAINT twits_pkey PRIMARY KEY (id);
 
 
 --
 -- TOC entry 2149 (class 1259 OID 491313)
--- Name: index_twats_on_tweeted_at_and_search; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_twits_on_tweeted_at_and_search; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
-CREATE INDEX index_twats_on_tweeted_at_and_search ON twats USING btree (tweeted_at, search);
+CREATE INDEX index_twits_on_tweeted_at_and_search ON twits USING btree (tweeted_at, search);
 
 
 --
